@@ -12,7 +12,5 @@ let ToDoSchema = new mongoose.Schema({
 
 //create the model
 
-// const toDoModel = new mongoose.model('toDoList', ToDoSchema);
-
 module.exports = mongoose.model('todoModel', ToDoSchema);
 

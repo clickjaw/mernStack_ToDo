@@ -16,7 +16,7 @@ export default class AllToDo extends Component {
   }
 
   getToDo = async () => {
-    const API = "http://localhost:3005/todo";
+    const API = "http://localhost:3008/todo";
     let res = await axios.get(API);
     this.setState({
       toDoList: res.data,
@@ -37,7 +37,7 @@ export default class AllToDo extends Component {
   };
 
   handleCreate = async (info) => {
-    const URL = `http://localhost:3005/new-todo`;
+    const URL = `http://localhost:3008/new-todo`;
 
     const response = await axios.post(URL, info);
 

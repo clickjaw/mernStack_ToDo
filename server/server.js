@@ -2,7 +2,7 @@ const express = require('express')
 const app = express();
 const cors = require('cors');
 require('dotenv').config();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 3007;
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 
@@ -30,7 +30,7 @@ app.post('/new-todo', async (req, res) => {
         res.send(`To Do sucessfully Created : ${newToDo}`);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error creating Employee');
+        res.status(500).send('Error creating To Do Item');
     }
 })
 
