@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Card from "react-bootstrap/Card";
+import { Card, Button } from "react-bootstrap";
+import Form from "react-bootstrap/Form"
 
 export default class AllToDo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      toDoList: []
+      toDoList: [],
     };
   }
 
@@ -16,7 +17,7 @@ export default class AllToDo extends Component {
   }
 
   getToDo = async () => {
-    const API = "http://localhost:3008/todo";
+    const API = "http://localhost:3005/todos";
     let res = await axios.get(API);
     this.setState({
       toDoList: res.data,
@@ -25,6 +26,8 @@ export default class AllToDo extends Component {
     // this.setState({dueDate: res.dueDate})
     console.log(this.state.toDoList);
   };
+  // console.log(this.description)
+  // this.setState({dueDate: res.dueDate})
 
   handleCreateForm = (event) => {
     event.preventDefault();
@@ -37,40 +40,54 @@ export default class AllToDo extends Component {
   };
 
   handleCreate = async (info) => {
-    const URL = `http://localhost:3008/new-todo`;
+    const URL = `http://localhost:3005/new-todo`;
 
     const response = await axios.post(URL, info);
 
     const newToDo = response.data;
-    this.setState(
-      {
-        toDo: [...this.state.toDoList, newToDo],
-      },
-      () => this.getToDo()
+    this.setState({ toDo: [...this.state.toDoList, newToDo] }, () =>
+      this.getToDo()
     );
+  };
+
+  handleDelete = async (itemDelete) => {
+    const url = `http://localhost:3005/todo/${itemDelete}`; // finds the ObjectID for us :0
+    console.log(itemDelete);
+    try {
+      const response = await axios.delete(url);
+      console.log(response.data);
+      const filteredOut = this.state.toDoList.filter(
+        (obj) => obj._id !== itemDelete
+      );
+      this.setState({ toDoList: filteredOut }); // auto rerender
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
     return (
-      <div style={{ display: "grid", justifyContent: "center" }}>
-        <button onClick={this.getToDo}>To Do</button>
-        <form onSubmit={this.handleCreateForm}>
-          <input type="text" name="toDoDescription" placeholder="Enter a Chore" />
+      <>
+        <Form onSubmit={this.handleCreateForm} style = {{display: 'grid', justifyContent:'center', margin: '10px', padding: '10px'}}>
+          <input
+            type="text"
+            name="toDoDescription"
+            placeholder="Enter a Chore"
+          />
           <input type="date" name="dueDate" placeholder="Due Date" />
-          <button type="submit">Submit</button>
-        </form>
-        {this.state.toDoList.map((obj) => (
-          <Card style={{ margin: "10px", padding: "10px" }}>
-            {/* dueDate =  */}
-            <Card.Title>{obj.dueDate}</Card.Title>
-            {/* description =  */}
-            <Card.Text>{obj.toDoDescription}</Card.Text>
-            <Card.Footer>{obj.complete}</Card.Footer>
-          </Card>
-        ))}
+          <Button type="submit">Submit</Button>
 
-        
-      </div>
+        </Form>
+        {this.state.toDoList.map(obj=>(
+
+              <Card key = {obj._id} style = {{display: 'grid', justifyContent:'center'}}>
+              <Card.Title>{obj.dueDate}</Card.Title>
+              <Card.Text>{obj.toDoDescription}</Card.Text>
+              <Button onClick={() => this.handleDelete(obj._id)}>Delete</Button>
+              </Card>
+        ))}
+      </>
+      
     );
   }
 }

@@ -12,5 +12,5 @@ let ToDoSchema = new mongoose.Schema({
 
 //create the model
 
-module.exports = mongoose.model('todoModel', ToDoSchema);
+module.exports = mongoose.model('toDoModel', ToDoSchema);
 

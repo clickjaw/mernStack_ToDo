@@ -15,7 +15,7 @@ export default class App extends Component {
             <Link to = "/">Main</Link>
           </li>
           <li>
-            <Link to = "/toDo">To Do</Link>
+            <Link to = "/todo">To Do</Link>
           </li>
           <li>
             <Link to = "/about">About</Link>
@@ -25,7 +25,7 @@ export default class App extends Component {
       <Routes>
         <Route exact path='/' element={<Main/>}/>
         <Route exact path = '/about' element = {<About/>}/>
-        <Route exact path = "/toDo" element={<AllToDo/>}/>
+        <Route exact path = "/todo" element={<AllToDo/>}/>
       </Routes>
     </Router>
     )
