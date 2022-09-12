@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form"
+import "../App.css"
 
 export default class AllToDo extends Component {
   constructor(props) {
@@ -67,7 +68,8 @@ export default class AllToDo extends Component {
 
   render() {
     return (
-      <>
+      <div className = "toDoDiv">
+      
         <Form onSubmit={this.handleCreateForm} style = {{display: 'grid', justifyContent:'center', margin: '10px', padding: '10px'}}>
           <input
             type="text"
@@ -80,13 +82,15 @@ export default class AllToDo extends Component {
         </Form>
         {this.state.toDoList.map(obj=>(
 
-              <Card key = {obj._id} style = {{display: 'grid', justifyContent:'center'}}>
+              <Card key = {obj._id} style = {{display: 'grid', justifyContent:'left', width: '18rem', padding: '10px', margin: '10px'}}>
               <Card.Title>{obj.dueDate}</Card.Title>
               <Card.Text>{obj.toDoDescription}</Card.Text>
-              <Button onClick={() => this.handleDelete(obj._id)}>Delete</Button>
+              <div className="toDoButton">
+              <Button onClick={() => this.handleDelete(obj._id)} style = {{display: 'grid', justifyContent: "center", position: 'relative', top: '50px', left: '210px'}}>Delete</Button>
+              </div>
               </Card>
         ))}
-      </>
+      </div>
       
     );
   }
